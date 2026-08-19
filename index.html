@@ -78,11 +78,11 @@
 
     /* ===== NAV ===== */
     header.nav {
-      position: sticky; top: 0; z-index: 50;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
       background: color-mix(in srgb, var(--paper) 84%, transparent);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid transparent;
-      transition: border-color .3s;
+      transition: border-color .3s, background .3s;
     }
     header.nav.scrolled { border-color: var(--line); }
     .nav-inner {
@@ -125,27 +125,60 @@
     .nav-menu-btn { display: none; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--ink); }
 
     /* ===== HERO ===== */
-    .hero { padding: clamp(56px, 8vw, 92px) 24px clamp(56px, 7vw, 84px); }
-    .hero-inner { max-width: var(--maxw); margin: 0 auto; }
-    .hero .mono-label { font-size: 13px; margin-bottom: 26px; }
+    .hero { position: relative; overflow: hidden; display: flex; align-items: center;
+      min-height: min(92vh, 840px); padding: clamp(112px, 15vh, 168px) 24px clamp(56px, 8vh, 92px);
+      background: #0e0c08; color: #f7f4ec; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-img { position: absolute; inset: 0; background-image: url('images/hero.jpg'); background-size: cover; background-position: center; }
+    .hero-img.dim { filter: brightness(.36) saturate(.82) contrast(1.03); }
+    .hero-img.bright { filter: brightness(.98) saturate(1.07);
+      --r: clamp(150px, 24vw, 300px);
+      -webkit-mask-image: radial-gradient(circle var(--r) at var(--mx,70%) var(--my,44%), #000 0%, #000 34%, transparent 72%);
+      mask-image: radial-gradient(circle var(--r) at var(--mx,70%) var(--my,44%), #000 0%, #000 34%, transparent 72%); }
+    .hero-dots { position: absolute; inset: 0; background-image: radial-gradient(rgba(0,0,0,.5) 0.9px, transparent 1.3px); background-size: 4px 4px; mix-blend-mode: multiply; opacity: .45; }
+    .hero-scrim { position: absolute; inset: 0; background:
+      linear-gradient(180deg, rgba(11,9,6,.72) 0%, rgba(11,9,6,.12) 16%, rgba(11,9,6,0) 26%),
+      linear-gradient(90deg, rgba(11,9,6,.94) 0%, rgba(11,9,6,.74) 30%, rgba(11,9,6,.30) 60%, rgba(11,9,6,.10) 100%),
+      linear-gradient(0deg, rgba(11,9,6,.62), rgba(11,9,6,0) 42%); }
+    .hero-inner { position: relative; z-index: 2; max-width: var(--maxw); margin: 0 auto; width: 100%; }
+    .hero .mono-label { font-size: 13px; margin-bottom: 26px; color: #90d1ab; }
+    .hero .mono-label::before { color: rgba(247,244,236,.45); }
     .hero h1 {
       font-family: var(--serif); font-weight: 700;
       font-size: clamp(42px, 8.2vw, 104px);
       line-height: 0.98; letter-spacing: -0.04em;
       text-wrap: balance; max-width: 15ch;
+      color: #faf7f0; text-shadow: 0 2px 34px rgba(0,0,0,.55);
     }
-    .hero h1 .hl { color: var(--accent); }
-    .hero-sub { margin-top: 30px; font-size: clamp(17px, 1.9vw, 21px); color: var(--ink-2); max-width: 52ch; }
+    .hero h1 .hl { color: #86cfa6; }
+    .hero-sub { margin-top: 30px; font-size: clamp(17px, 1.9vw, 21px); color: rgba(247,244,236,.86); max-width: 52ch; text-shadow: 0 1px 16px rgba(0,0,0,.5); }
     .hero-cta { margin-top: 38px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero .btn { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+    .hero .btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .hero .btn.ghost { background: transparent; color: var(--paper); border-color: rgba(247,244,236,.4); }
+    .hero .btn.ghost:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
     .hero-meta {
-      margin-top: clamp(48px, 7vw, 74px); padding-top: 30px; border-top: 1px solid var(--line);
+      margin-top: clamp(40px, 6vh, 66px); padding-top: 28px; border-top: 1px solid rgba(247,244,236,.2);
       display: flex; gap: clamp(28px, 5vw, 60px); flex-wrap: wrap;
     }
     .stat .n {
       font-family: var(--serif); font-size: clamp(30px, 4vw, 40px); font-weight: 600;
-      line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+      line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: #faf7f0;
     }
-    .stat .l { font-family: var(--mono); color: var(--muted); font-size: 12px; margin-top: 8px; text-transform: uppercase; letter-spacing: .04em; max-width: 22ch; }
+    .stat .l { font-family: var(--mono); color: rgba(247,244,236,.62); font-size: 12px; margin-top: 8px; text-transform: uppercase; letter-spacing: .04em; max-width: 22ch; }
+
+    /* nav transparent over dark hero, solid on scroll */
+    header.nav:not(.scrolled) { background: transparent; }
+    header.nav:not(.scrolled) .brand { color: #faf7f0; }
+    header.nav:not(.scrolled) .nav-links a { color: rgba(247,244,236,.82); }
+    header.nav:not(.scrolled) .nav-links a:hover { color: #fff; }
+    header.nav:not(.scrolled) .lang-toggle { border-color: rgba(247,244,236,.32); }
+    header.nav:not(.scrolled) .lang-toggle button { color: rgba(247,244,236,.78); }
+    header.nav:not(.scrolled) .lang-toggle button.active { background: #f4f2ea; color: #17160f; }
+    header.nav:not(.scrolled) .btn { background: #f4f2ea; color: #17160f; border-color: #f4f2ea; }
+    header.nav:not(.scrolled) .btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    header.nav:not(.scrolled) .nav-menu-btn { color: #faf7f0; }
+    header.nav .nav-links.mobile-open a { color: var(--muted); }
 
     /* ===== SERVICES ===== */
     #servicios { background: var(--paper-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -329,6 +362,12 @@
 
   <!-- HERO -->
   <section class="hero" id="top">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-img dim"></div>
+      <div class="hero-img bright" id="heroReveal"></div>
+      <div class="hero-dots"></div>
+      <div class="hero-scrim"></div>
+    </div>
     <div class="hero-inner">
       <span class="mono-label" data-es="Te lo digo en criollo" data-en="Let's put it plainly">Te lo digo en criollo</span>
       <h1 data-es='Productos digitales que se entienden y <span class="hl">funcionan</span>.' data-en='Digital products that make sense and <span class="hl">actually work</span>.'>Productos digitales que se entienden y <span class="hl">funcionan</span>.</h1>
@@ -607,6 +646,25 @@
     window.addEventListener("scroll", () => {
       document.getElementById("nav").classList.toggle("scrolled", window.scrollY > 10);
     });
+
+    /* hero flashlight: reveal the painting around the cursor */
+    (function(){
+      const hero = document.getElementById("top");
+      const reveal = document.getElementById("heroReveal");
+      if(!hero || !reveal) return;
+      let raf = null, mx = 0, my = 0;
+      function apply(){
+        reveal.style.setProperty("--mx", mx + "px");
+        reveal.style.setProperty("--my", my + "px");
+        raf = null;
+      }
+      hero.addEventListener("pointermove", e => {
+        const r = hero.getBoundingClientRect();
+        mx = e.clientX - r.left;
+        my = e.clientY - r.top;
+        if(!raf) raf = requestAnimationFrame(apply);
+      });
+    })();
 
     renderProjects();
     renderTeam();
