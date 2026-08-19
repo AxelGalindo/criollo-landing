@@ -219,6 +219,7 @@
       overflow: hidden; flex-shrink: 0;
     }
     .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .avatar img.zoom { transform: scale(1.42); transform-origin: center 38%; }
     .member h3 { font-family: var(--serif); font-weight: 600; font-size: 23px; letter-spacing: -0.02em; }
     .member .role { font-family: var(--mono); color: var(--accent); font-size: 12px; font-weight: 500; margin: 6px 0 14px; text-transform: uppercase; letter-spacing: .03em; }
     .member p { color: var(--muted); font-size: 14.5px; flex: 1; }
@@ -378,7 +379,7 @@
     <div class="wrap">
       <span class="mono-label reveal" data-es="El equipo" data-en="The team">El equipo</span>
       <h2 class="title reveal" data-es="Cinco personas que ya remaron juntas." data-en="Five people who have already rowed together.">Cinco personas que ya remaron juntas.</h2>
-      <p class="lead reveal" data-es="Nos conocimos construyendo productos en Radium Rocket. Ahora lo hacemos por cuenta propia, como Criollo." data-en="We met building products at Radium Rocket. Now we do it on our own terms, as Criollo.">Nos conocimos construyendo productos en Radium Rocket. Ahora lo hacemos por cuenta propia, como Criollo.</p>
+      <p class="lead reveal" data-es="Nos conocimos construyendo productos juntos. Ahora lo hacemos por cuenta propia, como Criollo." data-en="We met building products together. Now we do it on our own terms, as Criollo.">Nos conocimos construyendo productos juntos. Ahora lo hacemos por cuenta propia, como Criollo.</p>
       <div class="team-grid" id="teamGrid"></div>
     </div>
   </section>
@@ -471,27 +472,27 @@
     ];
 
     const team = [
-      { name:"Axel Galindo", mono:"AG",
+      { name:"Axel Galindo", mono:"AG", photo:"images/axel.jpg",
         role:{es:"Design Lead · Product Designer",en:"Design Lead · Product Designer"},
         bio:{es:"Combina UX/UI, criterio técnico y pensamiento estratégico para conectar necesidades reales con soluciones prácticas. También construye productos en no-code. Hoy Design Lead en Helios.",en:"Combines UX/UI, technical judgment and strategic thinking to connect real needs with practical solutions. Also builds products in no-code. Currently Design Lead at Helios."},
         links:[{l:"Portfolio",u:"https://www.axelgalindo.com"},{l:"LinkedIn",u:"https://www.linkedin.com/in/axel-galindo-dalaison/"}] },
 
-      { name:"Agustín Chazarreta", mono:"AC",
+      { name:"Agustín Chazarreta", mono:"AC", photo:"images/agustin.jpg", zoom:true,
         role:{es:"Desarrollador Fullstack",en:"Fullstack Developer"},
         bio:{es:"Desarrollador fullstack especializado en React y productos con IA integrada, donde interfaz, lógica y datos funcionan como un solo sistema. Hoy en Helios y como freelance.",en:"Fullstack developer specialized in React and AI-integrated products, where interface, logic and data work as a single system. Currently at Helios and freelancing."},
         links:[{l:"Portfolio",u:"https://agustin-chazarreta-porfolio.vercel.app"},{l:"GitHub",u:"https://github.com/Agustin-Chazarreta"},{l:"LinkedIn",u:"https://www.linkedin.com/in/agustin-chazarreta-bb4b62244/"}] },
 
-      { name:"Facundo Cosentino", mono:"FC",
+      { name:"Facundo Cosentino", mono:"FC", photo:"images/facundo.jpg",
         role:{es:"UX Lead · Product Designer",en:"UX Lead · Product Designer"},
         bio:{es:"UX Lead con 6 años construyendo productos digitales, con foco en impacto de negocio y experimentación rigurosa. Conecta cada decisión de diseño con resultados medibles. Hoy lidera UX en Aprende Institute.",en:"UX Lead with 6 years building digital products, focused on business impact and rigorous experimentation. Ties every design decision to measurable outcomes. Currently leading UX at Aprende Institute."},
         links:[{l:"Portfolio",u:"https://facundocosentino.design"},{l:"LinkedIn",u:"https://www.linkedin.com/in/facundo-cosentino/"}] },
 
-      { name:"Luciano Alarcón", mono:"LA",
+      { name:"Luciano Alarcón", mono:"LA", photo:"images/luciano.jpg", zoom:true,
         role:{es:"Senior Full-Stack Developer",en:"Senior Full-Stack Developer"},
         bio:{es:"Desarrollador Full-Stack Senior con más de 4 años construyendo aplicaciones web modernas con React, Next.js, Node.js y TypeScript. Fuerte en performance, sistemas legacy y liderazgo técnico. Hoy en RhinosApp.",en:"Senior Full-Stack Developer with 4+ years building modern web apps with React, Next.js, Node.js and TypeScript. Strong in performance, legacy systems and technical leadership. Currently at RhinosApp."},
         links:[{l:"Portfolio",u:"https://portfolio-luciano-alarcon.vercel.app/es"},{l:"LinkedIn",u:"https://www.linkedin.com/in/luciano-alarcon/"}] },
 
-      { name:"Juan Cruz Moreira", mono:"JM",
+      { name:"Juan Cruz Moreira", mono:"JM", photo:"images/juan.jpg",
         role:{es:"Full Stack Developer",en:"Full Stack Developer"},
         bio:{es:"Desarrollador Full Stack MERN con foco en soluciones innovadoras. Suele liderar al equipo, con fuerte comunicación y mentalidad colaborativa. Hoy en RhinosApp.",en:"Full Stack MERN developer focused on innovative solutions. Tends to lead the team, with strong communication and a collaborative mindset. Currently at RhinosApp."},
         links:[{l:"LinkedIn",u:"https://www.linkedin.com/in/juan-cruz-moreira-08411221a/"}] },
@@ -525,7 +526,7 @@
     function renderTeam(){
       document.getElementById("teamGrid").innerHTML = team.map(m=>`
         <article class="member reveal">
-          <div class="avatar">${m.photo ? `<img src="${m.photo}" alt="${m.name}" loading="lazy">` : m.mono}</div>
+          <div class="avatar">${m.photo ? `<img src="${m.photo}" alt="${m.name}" loading="lazy" class="${m.zoom?'zoom':''}">` : m.mono}</div>
           <h3>${m.name}</h3>
           <div class="role">${m.role[lang]}</div>
           <p>${m.bio[lang]}</p>
