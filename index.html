@@ -192,7 +192,15 @@
       font-family: var(--serif); font-weight: 700; font-size: clamp(44px, 6vw, 62px);
       color: rgba(255,255,255,.94); letter-spacing: -0.03em;
     }
+    .proj-thumb.has-logo { background: #ffffff; }
+    .proj-thumb img { width: 100%; height: 100%; display: block; }
+    .proj-thumb img.cover { object-fit: cover; }
+    .proj-thumb img.contain { object-fit: contain; padding: 30px; }
+    .proj-thumb.has-logo .proj-thumb-idx {
+      background: rgba(23,22,15,.5); color: #fff; padding: 3px 7px; border-radius: 5px; backdrop-filter: blur(2px);
+    }
     .proj-body { padding: 22px 22px 24px; flex: 1; display: flex; flex-direction: column; }
+    .proj-cat-b { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 9px; }
     .proj-body h3 { font-family: var(--serif); font-weight: 600; font-size: 23px; letter-spacing: -0.02em; }
     .proj-body p { color: var(--muted); font-size: 14.5px; margin-top: 8px; flex: 1; }
     .proj-by { margin-top: 18px; font-family: var(--mono); font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
@@ -205,10 +213,12 @@
     .team-grid { margin-top: clamp(40px, 5vw, 58px); display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .member { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 30px 28px; display: flex; flex-direction: column; }
     .avatar {
-      width: 58px; height: 58px; border-radius: 50%; background: var(--ink);
+      width: 66px; height: 66px; border-radius: 50%; background: var(--ink);
       display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
-      font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--paper); letter-spacing: -0.02em;
+      font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--paper); letter-spacing: -0.02em;
+      overflow: hidden; flex-shrink: 0;
     }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .member h3 { font-family: var(--serif); font-weight: 600; font-size: 23px; letter-spacing: -0.02em; }
     .member .role { font-family: var(--mono); color: var(--accent); font-size: 12px; font-weight: 500; margin: 6px 0 14px; text-transform: uppercase; letter-spacing: .03em; }
     .member p { color: var(--muted); font-size: 14.5px; flex: 1; }
@@ -244,7 +254,12 @@
     @keyframes pop { from { opacity: 0; transform: translateY(14px) scale(.985); } to { opacity: 1; transform: none; } }
     .modal-hero { height: 180px; background: var(--tone, var(--ink)); position: relative; display: flex; align-items: center; justify-content: center; }
     .modal-hero .mark { font-family: var(--serif); font-weight: 700; font-size: 72px; color: rgba(255,255,255,.94); letter-spacing: -0.03em; }
-    .modal-hero .idx { position: absolute; top: 16px; left: 18px; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: rgba(255,255,255,.72); }
+    .modal-hero.has-logo { background: #ffffff; }
+    .modal-hero img { width: 100%; height: 100%; display: block; }
+    .modal-hero img.cover { object-fit: cover; }
+    .modal-hero img.contain { object-fit: contain; padding: 40px; }
+    .modal-hero.has-logo .idx { background: rgba(23,22,15,.5); color: #fff; padding: 3px 7px; border-radius: 5px; }
+    .modal-hero .idx { position: absolute; top: 16px; left: 18px; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: rgba(255,255,255,.72); z-index: 1; }
     .modal-close { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.92); border: none; cursor: pointer; font-size: 15px; color: var(--ink); display: flex; align-items: center; justify-content: center; }
     .modal-body { padding: 32px 36px 38px; }
     .modal-body h3 { font-family: var(--serif); font-weight: 600; font-size: 30px; margin: 12px 0 10px; letter-spacing: -0.025em; }
@@ -405,35 +420,35 @@
         long:{es:"Plataforma de recruiting que convierte CVs y descripciones laborales en flujos estructurados para candidatos, coaches, empresas y recruiters. Diseño de producto y UX/UI, más el desarrollo técnico: ingesta de PDF, estructuración de CV, matching con IA, permisos y notificaciones.",en:"A recruiting platform that turns CVs and job descriptions into structured flows for candidates, coaches, companies and recruiters. Product and UX/UI design plus technical development: PDF ingestion, CV structuring, AI matching, permissions and notifications."},
         tags:["Bubble.io","OpenAI API","OCR.Space","REST APIs","Figma"], link:null },
 
-      { key:"qira", mono:"Q", tone:"#3c4a44",
+      { key:"qira", mono:"Q", tone:"#3c4a44", logo:"images/qira-pagos.png", cover:true,
         cat:{es:"Fintech · App",en:"Fintech · App"}, title:"Qira Pagos",
         by:["Axel Galindo","Luciano Alarcón"],
         short:{es:"Billetera digital del agro: la única con cuentas en dinero y en granos.",en:"Agri digital wallet: the only one with accounts in both money and grains."},
         long:{es:"Diseño UX/UI y desarrollo de la billetera fintech del agro argentino, la única con cuentas en dinero y en granos. Autenticación segura, historial de transacciones y notificaciones en tiempo real.",en:"UX/UI design and development of Argentina's agri fintech wallet, the only one with accounts in both money and grains. Secure authentication, transaction history and real-time notifications."},
         tags:["React Native","SQL","Sequelize","Figma"], link:"https://www.qirapagos.com/" },
 
-      { key:"qirag", mono:"Q", tone:"#7a5e44",
+      { key:"qirag", mono:"Q", tone:"#7a5e44", logo:"images/qira-global.jpg", cover:true,
         cat:{es:"E-commerce",en:"E-commerce"}, title:"Qira Global",
         by:["Luciano Alarcón","Axel Galindo"],
         short:{es:"Plataforma de comercio de productos agrícolas con carrito, pagos y panel de administración.",en:"Agricultural commerce platform with cart, payments and admin dashboard."},
         long:{es:"Plataforma de comercio de productos agrícolas con carrito en tiempo real, pagos integrados y un panel de administración completo, con diseño y desarrollo de punta a punta.",en:"Agricultural product commerce platform with a real-time cart, integrated payments and a complete admin dashboard, designed and developed end to end."},
         tags:["React","Node.js","MongoDB","Redux"], link:"https://www.qiraglobal.com/" },
 
-      { key:"aprende", mono:"A", tone:"#4b5a68",
+      { key:"aprende", mono:"A", tone:"#4b5a68", logo:"images/aprende.png",
         cat:{es:"EdTech · Growth",en:"EdTech · Growth"}, title:"Aprende Institute",
         by:["Facundo Cosentino"],
         short:{es:"Flujos de activación y captación que multiplicaron 2.6× la activación y sumaron +25-40% de leads.",en:"Activation and lead flows that lifted activation 2.6× and added +25-40% leads."},
         long:{es:"Diseño de producto enfocado en activación, retención y conversión para una EdTech que atiende a la comunidad latina en EE.UU. El flujo de activación premium multiplicó 2.6× la activación (de 9% a 23%), y el formulario de leads de dos pasos sumó +25-40% de MQLs sin afectar la conversión a ventas.",en:"Product design focused on activation, retention and conversion for a US EdTech serving Latino learners. The premium activation flow lifted activation 2.6× (from 9% to 23%), and the two-step lead form added +25-40% MQLs with no impact on sales conversion."},
         tags:["Product UX","A/B Testing","Amplitude","Figma"], link:null },
 
-      { key:"radium", mono:"R", tone:"#566b52",
+      { key:"radium", mono:"R", tone:"#566b52", logo:"images/radium.png",
         cat:{es:"EdTech · SaaS",en:"EdTech · SaaS"}, title:"Radium Learning",
         by:["Facundo Cosentino","Agustín Chazarreta"],
         short:{es:"Plataforma educativa SaaS diseñada y construida de punta a punta, del discovery al launch.",en:"End-to-end SaaS education platform, from discovery to launch."},
         long:{es:"Plataforma educativa SaaS diseñada y construida de punta a punta, desde el discovery hasta el lanzamiento. Diseño de producto y desarrollo de aplicaciones React con experiencias completas de usuario.",en:"End-to-end SaaS education platform designed and built from discovery to launch. Product design and React application development with full user experiences."},
         tags:["React","Product Design","SaaS"], link:null },
 
-      { key:"aapresid", mono:"A", tone:"#6b5d46",
+      { key:"aapresid", mono:"A", tone:"#6b5d46", logo:"images/aapresid.jpg", cover:true,
         cat:{es:"Media · Data",en:"Media · Data"}, title:"Aapresid · Red de Innovadores",
         by:["Luciano Alarcón"],
         short:{es:"Plataforma de contenido para compartir innovaciones del agro, con multimedia y analítica.",en:"Content platform for sharing agri innovations, with multimedia and analytics."},
@@ -490,12 +505,14 @@
       document.getElementById("projGrid").innerHTML = projects.map((p,i)=>`
         <article class="proj-card reveal" onclick="openModal(${i})" tabindex="0" role="button"
           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal(${i});}">
-          <div class="proj-thumb" style="--tone:${p.tone}">
+          <div class="proj-thumb ${p.logo?'has-logo':''}" style="--tone:${p.tone}">
             <span class="proj-thumb-idx">${pad(i+1)} / ${total}</span>
-            <span class="mark">${p.mono}</span>
-            <span class="proj-thumb-cat">${p.cat[lang]}</span>
+            ${p.logo
+              ? `<img src="${p.logo}" alt="${p.title}" loading="lazy" class="${p.cover?'cover':'contain'}">`
+              : `<span class="mark">${p.mono}</span>`}
           </div>
           <div class="proj-body">
+            <span class="proj-cat-b">${p.cat[lang]}</span>
             <h3>${p.title}</h3>
             <p>${p.short[lang]}</p>
             <div class="proj-by">${lang==="es"?"Por":"By"} <b>${p.by.join(", ")}</b></div>
@@ -508,7 +525,7 @@
     function renderTeam(){
       document.getElementById("teamGrid").innerHTML = team.map(m=>`
         <article class="member reveal">
-          <div class="avatar">${m.mono}</div>
+          <div class="avatar">${m.photo ? `<img src="${m.photo}" alt="${m.name}" loading="lazy">` : m.mono}</div>
           <h3>${m.name}</h3>
           <div class="role">${m.role[lang]}</div>
           <p>${m.bio[lang]}</p>
@@ -521,9 +538,11 @@
       const p = projects[i];
       const linkBtn = p.link ? `<a href="${p.link}" target="_blank" rel="noopener" class="btn">${lang==="es"?"Visitar sitio":"Visit site"} ↗</a>` : "";
       document.getElementById("modal").innerHTML = `
-        <div class="modal-hero" style="--tone:${p.tone}">
+        <div class="modal-hero ${p.logo?'has-logo':''}" style="--tone:${p.tone}">
           <span class="idx">${pad(i+1)} / ${total}</span>
-          <span class="mark">${p.mono}</span>
+          ${p.logo
+            ? `<img src="${p.logo}" alt="${p.title}" class="${p.cover?'cover':'contain'}">`
+            : `<span class="mark">${p.mono}</span>`}
           <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
         </div>
         <div class="modal-body">
