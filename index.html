@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Criollo · Estudio digital</title>
+  <meta name="description" content="Criollo. Diseño de producto, desarrollo web y productos con IA. Te lo explicamos en criollo, sin vueltas." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== TOKENS · committed warm-paper light world ===== */
+    :root {
+      --paper:   #f4f2ea;
+      --paper-2: #eae6da;
+      --card:    #fbfaf5;
+      --ink:     #17160f;
+      --ink-2:   #38352b;
+      --muted:   #6f695a;
+      --line:    #ded8c8;
+      --line-2:  #cec7b3;
+      --accent:  #2f6b4c;
+      --accent-d:#245239;
+      --accent-soft:#e2ebe0;
+
+      --serif: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+      --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono:  "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+      --maxw: 1180px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: var(--accent); color: #fff; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+    section { padding: clamp(72px, 10vw, 120px) 24px; }
+    .wrap { max-width: var(--maxw); margin: 0 auto; }
+
+    /* ===== TYPE PRIMITIVES ===== */
+    .mono-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .mono-label::before { content: "//"; color: var(--line-2); }
+    h2.title {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: clamp(30px, 4.4vw, 50px);
+      line-height: 1.04;
+      letter-spacing: -0.025em;
+      text-wrap: balance;
+      max-width: 18ch;
+      margin-top: 20px;
+    }
+    .lead {
+      color: var(--muted);
+      font-size: clamp(16px, 1.6vw, 18px);
+      max-width: 56ch;
+      margin-top: 20px;
+    }
+
+    /* ===== NAV ===== */
+    header.nav {
+      position: sticky; top: 0; z-index: 50;
+      background: color-mix(in srgb, var(--paper) 84%, transparent);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s;
+    }
+    header.nav.scrolled { border-color: var(--line); }
+    .nav-inner {
+      max-width: var(--maxw); margin: 0 auto;
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .brand {
+      font-family: var(--serif);
+      font-size: 23px; font-weight: 700; letter-spacing: -0.03em;
+    }
+    .brand .dot { color: var(--accent); }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a {
+      font-family: var(--mono); font-size: 13px; color: var(--muted);
+      transition: color .2s; text-transform: lowercase; letter-spacing: .02em;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-right { display: flex; align-items: center; gap: 14px; }
+    .lang-toggle {
+      display: inline-flex; border: 1px solid var(--line-2); border-radius: 999px; overflow: hidden;
+      font-family: var(--mono); font-size: 12px; font-weight: 500;
+    }
+    .lang-toggle button {
+      border: none; background: transparent; padding: 6px 11px; cursor: pointer;
+      color: var(--muted); font-family: var(--mono); transition: background .2s, color .2s;
+    }
+    .lang-toggle button.active { background: var(--ink); color: var(--paper); }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--ink); color: var(--paper);
+      padding: 11px 20px; border-radius: 999px;
+      font-family: var(--sans); font-size: 15px; font-weight: 500;
+      cursor: pointer; border: 1px solid var(--ink);
+      transition: transform .15s, background .2s, border-color .2s, color .2s;
+    }
+    .btn:hover { transform: translateY(-1px); background: var(--accent); border-color: var(--accent); color: #fff; }
+    .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line-2); }
+    .btn.ghost:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    .nav-menu-btn { display: none; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--ink); }
+
+    /* ===== HERO ===== */
+    .hero { padding: clamp(56px, 8vw, 92px) 24px clamp(56px, 7vw, 84px); }
+    .hero-inner { max-width: var(--maxw); margin: 0 auto; }
+    .hero .mono-label { font-size: 13px; margin-bottom: 26px; }
+    .hero h1 {
+      font-family: var(--serif); font-weight: 700;
+      font-size: clamp(42px, 8.2vw, 104px);
+      line-height: 0.98; letter-spacing: -0.04em;
+      text-wrap: balance; max-width: 15ch;
+    }
+    .hero h1 .hl { color: var(--accent); }
+    .hero-sub { margin-top: 30px; font-size: clamp(17px, 1.9vw, 21px); color: var(--ink-2); max-width: 52ch; }
+    .hero-cta { margin-top: 38px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-meta {
+      margin-top: clamp(48px, 7vw, 74px); padding-top: 30px; border-top: 1px solid var(--line);
+      display: flex; gap: clamp(28px, 5vw, 60px); flex-wrap: wrap;
+    }
+    .stat .n {
+      font-family: var(--serif); font-size: clamp(30px, 4vw, 40px); font-weight: 600;
+      line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+    }
+    .stat .l { font-family: var(--mono); color: var(--muted); font-size: 12px; margin-top: 8px; text-transform: uppercase; letter-spacing: .04em; max-width: 22ch; }
+
+    /* ===== SERVICES ===== */
+    #servicios { background: var(--paper-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .svc-grid { margin-top: clamp(40px, 5vw, 58px); display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .svc-card {
+      background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+      padding: 32px 28px; display: flex; flex-direction: column;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+    .svc-card:hover { transform: translateY(-3px); border-color: var(--line-2); box-shadow: 0 16px 34px -24px rgba(23,22,15,.4); }
+    .svc-card .mono-label { color: var(--muted); }
+    .svc-card .mono-label::before { color: var(--accent); }
+    .svc-card h3 { font-family: var(--serif); font-weight: 600; font-size: 25px; margin: 16px 0 12px; letter-spacing: -0.02em; }
+    .svc-card p { color: var(--muted); font-size: 15.5px; flex: 1; }
+    .svc-tags { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag {
+      font-family: var(--mono); font-size: 11.5px; color: var(--ink-2);
+      background: var(--paper); border: 1px solid var(--line); padding: 4px 10px; border-radius: 6px;
+    }
+
+    /* ===== PROJECTS ===== */
+    .proj-grid { margin-top: clamp(40px, 5vw, 58px); display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .proj-card {
+      border: 1px solid var(--line); border-radius: 14px; overflow: hidden; cursor: pointer;
+      background: var(--card); display: flex; flex-direction: column;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+    .proj-card:hover { transform: translateY(-3px); border-color: var(--line-2); box-shadow: 0 18px 40px -26px rgba(23,22,15,.45); }
+    .proj-thumb {
+      aspect-ratio: 16/10; background: var(--tone, var(--ink)); position: relative;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .proj-thumb-idx {
+      position: absolute; top: 14px; left: 16px;
+      font-family: var(--mono); font-size: 11px; letter-spacing: .06em;
+      color: rgba(255,255,255,.72);
+    }
+    .proj-thumb-cat {
+      position: absolute; bottom: 14px; left: 16px; right: 16px;
+      font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+      color: rgba(255,255,255,.82);
+    }
+    .proj-thumb .mark {
+      font-family: var(--serif); font-weight: 700; font-size: clamp(44px, 6vw, 62px);
+      color: rgba(255,255,255,.94); letter-spacing: -0.03em;
+    }
+    .proj-body { padding: 22px 22px 24px; flex: 1; display: flex; flex-direction: column; }
+    .proj-body h3 { font-family: var(--serif); font-weight: 600; font-size: 23px; letter-spacing: -0.02em; }
+    .proj-body p { color: var(--muted); font-size: 14.5px; margin-top: 8px; flex: 1; }
+    .proj-by { margin-top: 18px; font-family: var(--mono); font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+    .proj-by b { color: var(--ink); font-weight: 500; }
+    .proj-open { margin-top: 12px; font-size: 14px; color: var(--accent); font-weight: 500; display: inline-flex; gap: 6px; transition: gap .2s; }
+    .proj-card:hover .proj-open { gap: 11px; }
+
+    /* ===== TEAM ===== */
+    #equipo { background: var(--paper-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .team-grid { margin-top: clamp(40px, 5vw, 58px); display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .member { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 30px 28px; display: flex; flex-direction: column; }
+    .avatar {
+      width: 58px; height: 58px; border-radius: 50%; background: var(--ink);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
+      font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--paper); letter-spacing: -0.02em;
+    }
+    .member h3 { font-family: var(--serif); font-weight: 600; font-size: 23px; letter-spacing: -0.02em; }
+    .member .role { font-family: var(--mono); color: var(--accent); font-size: 12px; font-weight: 500; margin: 6px 0 14px; text-transform: uppercase; letter-spacing: .03em; }
+    .member p { color: var(--muted); font-size: 14.5px; flex: 1; }
+    .member .links { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 12px; font-family: var(--mono); font-size: 12px; }
+    .member .links a { color: var(--muted); border-bottom: 1px solid var(--line-2); padding-bottom: 2px; transition: color .2s, border-color .2s; }
+    .member .links a:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ===== CONTACT ===== */
+    .contact-card { background: var(--ink); color: var(--paper); border-radius: 20px; padding: clamp(40px, 6vw, 82px); }
+    .contact-card .mono-label { color: #9fc3ac; }
+    .contact-card .mono-label::before { color: #5c7a67; }
+    .contact-card h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(28px, 4.6vw, 52px); line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance; max-width: 20ch; margin-top: 18px; }
+    .contact-card p { color: rgba(244,242,234,.66); max-width: 50ch; margin-top: 18px; font-size: 17px; }
+    .contact-cta { margin-top: 34px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .contact-card .btn { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+    .contact-card .btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .contact-card .btn.ghost { background: transparent; color: var(--paper); border-color: rgba(244,242,234,.28); }
+    .contact-card .btn.ghost:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+
+    /* ===== FOOTER ===== */
+    footer { padding: 36px 24px; border-top: 1px solid var(--line); }
+    .foot-inner { max-width: var(--maxw); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
+    .foot-inner .brand { font-size: 19px; }
+    .foot-inner span.meta { font-family: var(--mono); color: var(--muted); font-size: 12px; }
+
+    /* ===== MODAL ===== */
+    .modal-back {
+      position: fixed; inset: 0; background: rgba(18,16,10,.55); backdrop-filter: blur(4px);
+      display: none; align-items: flex-start; justify-content: center; padding: 40px 20px; z-index: 100; overflow-y: auto;
+    }
+    .modal-back.open { display: flex; }
+    .modal { background: var(--paper); border-radius: 18px; max-width: 700px; width: 100%; overflow: hidden; box-shadow: 0 40px 90px -30px rgba(0,0,0,.55); animation: pop .25s ease; }
+    @keyframes pop { from { opacity: 0; transform: translateY(14px) scale(.985); } to { opacity: 1; transform: none; } }
+    .modal-hero { height: 180px; background: var(--tone, var(--ink)); position: relative; display: flex; align-items: center; justify-content: center; }
+    .modal-hero .mark { font-family: var(--serif); font-weight: 700; font-size: 72px; color: rgba(255,255,255,.94); letter-spacing: -0.03em; }
+    .modal-hero .idx { position: absolute; top: 16px; left: 18px; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: rgba(255,255,255,.72); }
+    .modal-close { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.92); border: none; cursor: pointer; font-size: 15px; color: var(--ink); display: flex; align-items: center; justify-content: center; }
+    .modal-body { padding: 32px 36px 38px; }
+    .modal-body h3 { font-family: var(--serif); font-weight: 600; font-size: 30px; margin: 12px 0 10px; letter-spacing: -0.025em; }
+    .modal-body .by { font-family: var(--mono); color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .03em; margin-bottom: 20px; }
+    .modal-body .by b { color: var(--ink); font-weight: 500; }
+    .modal-body .desc { font-size: 16.5px; color: var(--ink-2); }
+    .modal-meta { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 7px; }
+    .modal-body .btn { margin-top: 28px; }
+
+    /* ===== REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .btn:hover, .svc-card:hover, .proj-card:hover, .member:hover { transform: none; }
+      .modal { animation: none; }
+    }
+
+    @media (max-width: 900px) {
+      .svc-grid, .proj-grid, .team-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .nav-links.mobile-open {
+        display: flex; flex-direction: column; align-items: flex-start;
+        position: absolute; top: 62px; left: 0; right: 0; background: var(--paper);
+        border-bottom: 1px solid var(--line); padding: 20px 24px; gap: 16px;
+      }
+      .nav-menu-btn { display: inline-flex; }
+    }
+    @media (max-width: 600px) {
+      .svc-grid, .proj-grid, .team-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#top" class="brand" aria-label="Criollo">Criollo<span class="dot">.</span></a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#servicios" data-es="servicios" data-en="services">servicios</a>
+        <a href="#proyectos" data-es="proyectos" data-en="work">proyectos</a>
+        <a href="#equipo" data-es="equipo" data-en="team">equipo</a>
+        <a href="#contacto" data-es="contacto" data-en="contact">contacto</a>
+      </nav>
+      <div class="nav-right">
+        <div class="lang-toggle" role="group" aria-label="Idioma">
+          <button data-lang="es" class="active" onclick="setLang('es')">ES</button>
+          <button data-lang="en" onclick="setLang('en')">EN</button>
+        </div>
+        <a href="#contacto" class="btn" data-es="Hablemos" data-en="Let's talk">Hablemos</a>
+        <button class="nav-menu-btn" aria-label="Menú" onclick="document.getElementById('navLinks').classList.toggle('mobile-open')">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-inner">
+      <span class="mono-label" data-es="Te lo digo en criollo" data-en="Let's put it plainly">Te lo digo en criollo</span>
+      <h1 data-es='Productos digitales que se entienden y <span class="hl">funcionan</span>.' data-en='Digital products that make sense and <span class="hl">actually work</span>.'>Productos digitales que se entienden y <span class="hl">funcionan</span>.</h1>
+      <p class="hero-sub" data-es="Diseño, desarrollo y productos con IA. Un equipo que ya construyó junto productos reales, sin vueltas ni tecnicismos innecesarios." data-en="Design, development and AI products. A team that has already shipped real products together, with no jargon and no runaround.">Diseño, desarrollo y productos con IA. Un equipo que ya construyó junto productos reales, sin vueltas ni tecnicismos innecesarios.</p>
+      <div class="hero-cta">
+        <a href="#proyectos" class="btn" data-es="Ver proyectos" data-en="See our work">Ver proyectos</a>
+        <a href="#contacto" class="btn ghost" data-es="Trabajemos juntos" data-en="Work with us">Trabajemos juntos</a>
+      </div>
+      <div class="hero-meta">
+        <div class="stat"><div class="n">5</div><div class="l" data-es="Personas, un equipo" data-en="People, one team">Personas, un equipo</div></div>
+        <div class="stat"><div class="n">3</div><div class="l" data-es="Diseño, desarrollo e IA" data-en="Design, dev and AI">Diseño, desarrollo e IA</div></div>
+        <div class="stat"><div class="n">+15</div><div class="l" data-es="Productos entregados" data-en="Products shipped">Productos entregados</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="servicios">
+    <div class="wrap">
+      <span class="mono-label reveal" data-es="Qué hacemos" data-en="What we do">Qué hacemos</span>
+      <h2 class="title reveal" data-es="Del problema a un producto que la gente usa." data-en="From the problem to a product people actually use.">Del problema a un producto que la gente usa.</h2>
+      <div class="svc-grid">
+        <div class="svc-card reveal">
+          <span class="mono-label" data-es="Diseño" data-en="Design">Diseño</span>
+          <h3 data-es="Diseño de producto" data-en="Product design">Diseño de producto</h3>
+          <p data-es="Investigación, UX/UI, prototipos y design systems. Interfaces claras, medibles y pensadas para que la gente entienda y quiera usar." data-en="Research, UX/UI, prototypes and design systems. Clear, measurable interfaces built so people understand and want to use them.">Investigación, UX/UI, prototipos y design systems. Interfaces claras, medibles y pensadas para que la gente entienda y quiera usar.</p>
+          <div class="svc-tags"><span class="tag">UX Research</span><span class="tag">UI Design</span><span class="tag">Design Systems</span><span class="tag">Figma</span></div>
+        </div>
+        <div class="svc-card reveal">
+          <span class="mono-label" data-es="Desarrollo" data-en="Development">Desarrollo</span>
+          <h3 data-es="Desarrollo web y apps" data-en="Web & app development">Desarrollo web y apps</h3>
+          <p data-es="Sitios, plataformas y aplicaciones a medida. Código sólido y escalable donde interfaz, lógica y datos funcionan como un solo sistema." data-en="Custom sites, platforms and applications. Solid, scalable code where interface, logic and data work as a single system.">Sitios, plataformas y aplicaciones a medida. Código sólido y escalable donde interfaz, lógica y datos funcionan como un solo sistema.</p>
+          <div class="svc-tags"><span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Node.js</span><span class="tag">TypeScript</span></div>
+        </div>
+        <div class="svc-card reveal">
+          <span class="mono-label" data-es="IA / No-code" data-en="AI / No-code">IA / No-code</span>
+          <h3 data-es="Productos con IA y no-code" data-en="AI & no-code products">Productos con IA y no-code</h3>
+          <p data-es="Integraciones con IA, automatizaciones y MVPs rápidos. De la idea a un producto funcionando, sin gastar de más para validar." data-en="AI integrations, automations and fast MVPs. From idea to a working product, without overspending to validate.">Integraciones con IA, automatizaciones y MVPs rápidos. De la idea a un producto funcionando, sin gastar de más para validar.</p>
+          <div class="svc-tags"><span class="tag">OpenAI API</span><span class="tag">Bubble.io</span><span class="tag">Automations</span><span class="tag">MVP</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="proyectos">
+    <div class="wrap">
+      <span class="mono-label reveal" data-es="Proyectos" data-en="Selected work">Proyectos</span>
+      <h2 class="title reveal" data-es="Productos reales en los que trabajamos." data-en="Real products we have worked on.">Productos reales en los que trabajamos.</h2>
+      <p class="lead reveal" data-es="Recién arrancamos como Criollo, pero cada uno trae experiencia en productos que hoy están en la calle. Hacé clic para ver el detalle." data-en="We are just starting out as Criollo, but each of us brings experience in products that are live today. Click any card for the detail.">Recién arrancamos como Criollo, pero cada uno trae experiencia en productos que hoy están en la calle. Hacé clic para ver el detalle.</p>
+      <div class="proj-grid" id="projGrid"></div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="equipo">
+    <div class="wrap">
+      <span class="mono-label reveal" data-es="El equipo" data-en="The team">El equipo</span>
+      <h2 class="title reveal" data-es="Cinco personas que ya remaron juntas." data-en="Five people who have already rowed together.">Cinco personas que ya remaron juntas.</h2>
+      <p class="lead reveal" data-es="Nos conocimos construyendo productos en Radium Rocket. Ahora lo hacemos por cuenta propia, como Criollo." data-en="We met building products at Radium Rocket. Now we do it on our own terms, as Criollo.">Nos conocimos construyendo productos en Radium Rocket. Ahora lo hacemos por cuenta propia, como Criollo.</p>
+      <div class="team-grid" id="teamGrid"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contacto">
+    <div class="wrap">
+      <div class="contact-card reveal">
+        <span class="mono-label" data-es="Contacto" data-en="Contact">Contacto</span>
+        <h2 data-es="¿Tenés una idea o un producto que necesita construirse?" data-en="Have an idea or a product that needs building?">¿Tenés una idea o un producto que necesita construirse?</h2>
+        <p data-es="Contanos qué necesitás. Te respondemos en criollo, sin presupuestos inflados ni promesas raras." data-en="Tell us what you need. We answer plainly, with no inflated quotes or strange promises.">Contanos qué necesitás. Te respondemos en criollo, sin presupuestos inflados ni promesas raras.</p>
+        <div class="contact-cta">
+          <a href="mailto:hola@criollo.studio" class="btn" data-es="Escribinos" data-en="Email us">Escribinos</a>
+          <a href="#" class="btn ghost" id="waBtn" data-es="WhatsApp" data-en="WhatsApp">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-inner">
+      <span class="brand">Criollo<span class="dot">.</span></span>
+      <span class="meta" data-es="© 2026 Criollo · Soluciones digitales, en criollo." data-en="© 2026 Criollo · Digital solutions, made plain.">© 2026 Criollo · Soluciones digitales, en criollo.</span>
+    </div>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal-back" id="modalBack" onclick="if(event.target===this) closeModal()">
+    <div class="modal" id="modal"></div>
+  </div>
+
+  <script>
+    /* ===== earthy, harmonious tonal set (one system, not a rainbow) ===== */
+    const projects = [
+      { key:"helios", mono:"H", tone:"#2f6b4c",
+        cat:{es:"SaaS · IA",en:"SaaS · AI"}, title:"Helios / Potentiality",
+        by:["Axel Galindo","Agustín Chazarreta"],
+        short:{es:"Plataforma de recruiting con IA que transforma CVs y búsquedas en flujos estructurados.",en:"AI recruiting platform that turns CVs and job posts into structured workflows."},
+        long:{es:"Plataforma de recruiting que convierte CVs y descripciones laborales en flujos estructurados para candidatos, coaches, empresas y recruiters. Diseño de producto y UX/UI, más el desarrollo técnico: ingesta de PDF, estructuración de CV, matching con IA, permisos y notificaciones.",en:"A recruiting platform that turns CVs and job descriptions into structured flows for candidates, coaches, companies and recruiters. Product and UX/UI design plus technical development: PDF ingestion, CV structuring, AI matching, permissions and notifications."},
+        tags:["Bubble.io","OpenAI API","OCR.Space","REST APIs","Figma"], link:null },
+
+      { key:"qira", mono:"Q", tone:"#3c4a44",
+        cat:{es:"Fintech · App",en:"Fintech · App"}, title:"Qira Pagos",
+        by:["Axel Galindo","Luciano Alarcón"],
+        short:{es:"Billetera digital del agro: la única con cuentas en dinero y en granos.",en:"Agri digital wallet: the only one with accounts in both money and grains."},
+        long:{es:"Diseño UX/UI y desarrollo de la billetera fintech del agro argentino, la única con cuentas en dinero y en granos. Autenticación segura, historial de transacciones y notificaciones en tiempo real.",en:"UX/UI design and development of Argentina's agri fintech wallet, the only one with accounts in both money and grains. Secure authentication, transaction history and real-time notifications."},
+        tags:["React Native","SQL","Sequelize","Figma"], link:"https://www.qirapagos.com/" },
+
+      { key:"qirag", mono:"Q", tone:"#7a5e44",
+        cat:{es:"E-commerce",en:"E-commerce"}, title:"Qira Global",
+        by:["Luciano Alarcón","Axel Galindo"],
+        short:{es:"Plataforma de comercio de productos agrícolas con carrito, pagos y panel de administración.",en:"Agricultural commerce platform with cart, payments and admin dashboard."},
+        long:{es:"Plataforma de comercio de productos agrícolas con carrito en tiempo real, pagos integrados y un panel de administración completo, con diseño y desarrollo de punta a punta.",en:"Agricultural product commerce platform with a real-time cart, integrated payments and a complete admin dashboard, designed and developed end to end."},
+        tags:["React","Node.js","MongoDB","Redux"], link:"https://www.qiraglobal.com/" },
+
+      { key:"aprende", mono:"A", tone:"#4b5a68",
+        cat:{es:"EdTech · Growth",en:"EdTech · Growth"}, title:"Aprende Institute",
+        by:["Facundo Cosentino"],
+        short:{es:"Flujos de activación y captación que multiplicaron 2.6× la activación y sumaron +25-40% de leads.",en:"Activation and lead flows that lifted activation 2.6× and added +25-40% leads."},
+        long:{es:"Diseño de producto enfocado en activación, retención y conversión para una EdTech que atiende a la comunidad latina en EE.UU. El flujo de activación premium multiplicó 2.6× la activación (de 9% a 23%), y el formulario de leads de dos pasos sumó +25-40% de MQLs sin afectar la conversión a ventas.",en:"Product design focused on activation, retention and conversion for a US EdTech serving Latino learners. The premium activation flow lifted activation 2.6× (from 9% to 23%), and the two-step lead form added +25-40% MQLs with no impact on sales conversion."},
+        tags:["Product UX","A/B Testing","Amplitude","Figma"], link:null },
+
+      { key:"radium", mono:"R", tone:"#566b52",
+        cat:{es:"EdTech · SaaS",en:"EdTech · SaaS"}, title:"Radium Learning",
+        by:["Facundo Cosentino","Agustín Chazarreta"],
+        short:{es:"Plataforma educativa SaaS diseñada y construida de punta a punta, del discovery al launch.",en:"End-to-end SaaS education platform, from discovery to launch."},
+        long:{es:"Plataforma educativa SaaS diseñada y construida de punta a punta, desde el discovery hasta el lanzamiento. Diseño de producto y desarrollo de aplicaciones React con experiencias completas de usuario.",en:"End-to-end SaaS education platform designed and built from discovery to launch. Product design and React application development with full user experiences."},
+        tags:["React","Product Design","SaaS"], link:null },
+
+      { key:"aapresid", mono:"A", tone:"#6b5d46",
+        cat:{es:"Media · Data",en:"Media · Data"}, title:"Aapresid · Red de Innovadores",
+        by:["Luciano Alarcón"],
+        short:{es:"Plataforma de contenido para compartir innovaciones del agro, con multimedia y analítica.",en:"Content platform for sharing agri innovations, with multimedia and analytics."},
+        long:{es:"Plataforma de medios digitales para compartir innovaciones agrícolas, con contenido multimedia, interacción social y analítica de datos.",en:"Digital media platform for sharing agricultural innovations, with multimedia content, social interaction and data analytics."},
+        tags:["Next.js","Node.js","AWS S3","MongoDB"], link:"https://reddeinnovadores.aapresid.org.ar/es" },
+
+      { key:"m23", mono:"M", tone:"#414e48",
+        cat:{es:"Fintech · Web",en:"Fintech · Web"}, title:"M23 · Chequera Virtual",
+        by:["Luciano Alarcón"],
+        short:{es:"App de venta y cotización de cheques con autenticación segura y pagos integrados.",en:"Check sales and quotation app with secure auth and integrated payments."},
+        long:{es:"Aplicación de venta y cotización de cheques con autenticación segura, integración de pagos y un panel de usuario intuitivo.",en:"Check sales and quotation application with secure authentication, payment integration and an intuitive user dashboard."},
+        tags:["React","Supabase","SQL","Tailwind"], link:"https://m23.org/" },
+
+      { key:"achs", mono:"A", tone:"#8a5540",
+        cat:{es:"Branding · Design System",en:"Branding · Design System"}, title:"ACHS · Rebrand & Design System",
+        by:["Facundo Cosentino"],
+        short:{es:"Rediseño de marca y sistema de diseño corporativo para una de las mayores aseguradoras de Chile.",en:"Corporate rebrand and design system for one of Chile's largest insurers."},
+        long:{es:"Rediseño de marca de ACHS, una de las principales aseguradoras de salud ocupacional de Chile. Construcción del sistema de diseño y una librería de componentes a medida para que el equipo de desarrollo escalara la nueva identidad en los productos digitales.",en:"Brand redesign for ACHS, one of Chile's leading occupational health insurers. Built the design system and a custom component library so the development team could scale the new identity across digital products."},
+        tags:["Design System","Branding","Figma"], link:null }
+    ];
+
+    const team = [
+      { name:"Axel Galindo", mono:"AG",
+        role:{es:"Design Lead · Product Designer",en:"Design Lead · Product Designer"},
+        bio:{es:"Combina UX/UI, criterio técnico y pensamiento estratégico para conectar necesidades reales con soluciones prácticas. También construye productos en no-code. Hoy Design Lead en Helios.",en:"Combines UX/UI, technical judgment and strategic thinking to connect real needs with practical solutions. Also builds products in no-code. Currently Design Lead at Helios."},
+        links:[{l:"Portfolio",u:"https://www.axelgalindo.com"},{l:"LinkedIn",u:"https://www.linkedin.com/in/axel-galindo-dalaison/"}] },
+
+      { name:"Agustín Chazarreta", mono:"AC",
+        role:{es:"Desarrollador Fullstack",en:"Fullstack Developer"},
+        bio:{es:"Desarrollador fullstack especializado en React y productos con IA integrada, donde interfaz, lógica y datos funcionan como un solo sistema. Hoy en Helios y como freelance.",en:"Fullstack developer specialized in React and AI-integrated products, where interface, logic and data work as a single system. Currently at Helios and freelancing."},
+        links:[{l:"Portfolio",u:"https://agustin-chazarreta-porfolio.vercel.app"},{l:"GitHub",u:"https://github.com/Agustin-Chazarreta"},{l:"LinkedIn",u:"https://www.linkedin.com/in/agustin-chazarreta-bb4b62244/"}] },
+
+      { name:"Facundo Cosentino", mono:"FC",
+        role:{es:"UX Lead · Product Designer",en:"UX Lead · Product Designer"},
+        bio:{es:"UX Lead con 6 años construyendo productos digitales, con foco en impacto de negocio y experimentación rigurosa. Conecta cada decisión de diseño con resultados medibles. Hoy lidera UX en Aprende Institute.",en:"UX Lead with 6 years building digital products, focused on business impact and rigorous experimentation. Ties every design decision to measurable outcomes. Currently leading UX at Aprende Institute."},
+        links:[{l:"Portfolio",u:"https://facundocosentino.design"},{l:"LinkedIn",u:"https://www.linkedin.com/in/facundo-cosentino/"}] },
+
+      { name:"Luciano Alarcón", mono:"LA",
+        role:{es:"Senior Full-Stack Developer",en:"Senior Full-Stack Developer"},
+        bio:{es:"Desarrollador Full-Stack Senior con más de 4 años construyendo aplicaciones web modernas con React, Next.js, Node.js y TypeScript. Fuerte en performance, sistemas legacy y liderazgo técnico. Hoy en RhinosApp.",en:"Senior Full-Stack Developer with 4+ years building modern web apps with React, Next.js, Node.js and TypeScript. Strong in performance, legacy systems and technical leadership. Currently at RhinosApp."},
+        links:[{l:"Portfolio",u:"https://portfolio-luciano-alarcon.vercel.app/es"},{l:"LinkedIn",u:"https://www.linkedin.com/in/luciano-alarcon/"}] },
+
+      { name:"Juan Cruz Moreira", mono:"JM",
+        role:{es:"Full Stack Developer",en:"Full Stack Developer"},
+        bio:{es:"Desarrollador Full Stack MERN con foco en soluciones innovadoras. Suele liderar al equipo, con fuerte comunicación y mentalidad colaborativa. Hoy en RhinosApp.",en:"Full Stack MERN developer focused on innovative solutions. Tends to lead the team, with strong communication and a collaborative mindset. Currently at RhinosApp."},
+        links:[{l:"LinkedIn",u:"https://www.linkedin.com/in/juan-cruz-moreira-08411221a/"}] },
+    ];
+
+    let lang = "es";
+    const pad = n => String(n).padStart(2,"0");
+    const total = pad(projects.length);
+
+    function renderProjects(){
+      document.getElementById("projGrid").innerHTML = projects.map((p,i)=>`
+        <article class="proj-card reveal" onclick="openModal(${i})" tabindex="0" role="button"
+          onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal(${i});}">
+          <div class="proj-thumb" style="--tone:${p.tone}">
+            <span class="proj-thumb-idx">${pad(i+1)} / ${total}</span>
+            <span class="mark">${p.mono}</span>
+            <span class="proj-thumb-cat">${p.cat[lang]}</span>
+          </div>
+          <div class="proj-body">
+            <h3>${p.title}</h3>
+            <p>${p.short[lang]}</p>
+            <div class="proj-by">${lang==="es"?"Por":"By"} <b>${p.by.join(", ")}</b></div>
+            <span class="proj-open">${lang==="es"?"Ver detalle":"View detail"} →</span>
+          </div>
+        </article>`).join("");
+      observeReveal();
+    }
+
+    function renderTeam(){
+      document.getElementById("teamGrid").innerHTML = team.map(m=>`
+        <article class="member reveal">
+          <div class="avatar">${m.mono}</div>
+          <h3>${m.name}</h3>
+          <div class="role">${m.role[lang]}</div>
+          <p>${m.bio[lang]}</p>
+          <div class="links">${m.links.map(x=>`<a href="${x.u}" target="_blank" rel="noopener">${x.l} ↗</a>`).join("")}</div>
+        </article>`).join("");
+      observeReveal();
+    }
+
+    function openModal(i){
+      const p = projects[i];
+      const linkBtn = p.link ? `<a href="${p.link}" target="_blank" rel="noopener" class="btn">${lang==="es"?"Visitar sitio":"Visit site"} ↗</a>` : "";
+      document.getElementById("modal").innerHTML = `
+        <div class="modal-hero" style="--tone:${p.tone}">
+          <span class="idx">${pad(i+1)} / ${total}</span>
+          <span class="mark">${p.mono}</span>
+          <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
+        </div>
+        <div class="modal-body">
+          <span class="mono-label">${p.cat[lang]}</span>
+          <h3>${p.title}</h3>
+          <div class="by">${lang==="es"?"Por":"By"} <b>${p.by.join(", ")}</b></div>
+          <p class="desc">${p.long[lang]}</p>
+          <div class="modal-meta">${p.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+          ${linkBtn}
+        </div>`;
+      document.getElementById("modalBack").classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+    function closeModal(){
+      document.getElementById("modalBack").classList.remove("open");
+      document.body.style.overflow = "";
+    }
+    document.addEventListener("keydown", e => { if(e.key==="Escape") closeModal(); });
+
+    function setLang(l){
+      lang = l;
+      document.documentElement.lang = l;
+      document.querySelectorAll("[data-lang]").forEach(b => b.classList.toggle("active", b.dataset.lang===l));
+      document.querySelectorAll("[data-es][data-en]").forEach(el => { el.innerHTML = el.getAttribute("data-"+l); });
+      renderProjects();
+      renderTeam();
+    }
+
+    let io;
+    function observeReveal(){
+      if(!io){
+        io = new IntersectionObserver(es => {
+          es.forEach(e => { if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+        }, { threshold: 0.12 });
+      }
+      document.querySelectorAll(".reveal:not(.in)").forEach(el => io.observe(el));
+    }
+
+    window.addEventListener("scroll", () => {
+      document.getElementById("nav").classList.toggle("scrolled", window.scrollY > 10);
+    });
+
+    renderProjects();
+    renderTeam();
+    observeReveal();
+  </script>
+</body>
+</html>
