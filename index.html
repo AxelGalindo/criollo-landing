@@ -130,11 +130,11 @@
       background: #0e0c08; color: #f7f4ec; }
     .hero-bg { position: absolute; inset: 0; z-index: 0; }
     .hero-img { position: absolute; inset: 0; background-image: url('images/hero.jpg'); background-size: cover; background-position: center; }
-    .hero-img.dim { filter: brightness(.36) saturate(.82) contrast(1.03); }
-    .hero-img.bright { filter: brightness(.98) saturate(1.07);
-      --r: clamp(150px, 24vw, 300px);
-      -webkit-mask-image: radial-gradient(circle var(--r) at var(--mx,70%) var(--my,44%), #000 0%, #000 34%, transparent 72%);
-      mask-image: radial-gradient(circle var(--r) at var(--mx,70%) var(--my,44%), #000 0%, #000 34%, transparent 72%); }
+    .hero-img.dim { filter: brightness(.42) saturate(.85) contrast(1.02); }
+    .hero-img.bright { filter: brightness(.72) saturate(1.0);
+      --r: clamp(180px, 27vw, 340px);
+      -webkit-mask-image: radial-gradient(circle var(--r) at var(--mx,70%) var(--my,44%), rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 42%, rgba(0,0,0,0) 88%);
+      mask-image: radial-gradient(circle var(--r) at var(--mx,70%) var(--my,44%), rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 42%, rgba(0,0,0,0) 88%); }
     .hero-dots { position: absolute; inset: 0; background-image: radial-gradient(rgba(0,0,0,.5) 0.9px, transparent 1.3px); background-size: 4px 4px; mix-blend-mode: multiply; opacity: .45; }
     .hero-scrim { position: absolute; inset: 0; background:
       linear-gradient(180deg, rgba(11,9,6,.72) 0%, rgba(11,9,6,.12) 16%, rgba(11,9,6,0) 26%),
@@ -200,6 +200,19 @@
     }
 
     /* ===== PROJECTS ===== */
+    #proyectos { position: relative; color: #f0e9dd; border-top: 1px solid rgba(255,255,255,.06); border-bottom: 1px solid rgba(255,255,255,.06);
+      background:
+        radial-gradient(120% 80% at 18% 0%, #2f2418 0%, transparent 58%),
+        radial-gradient(130% 90% at 92% 100%, #2a2015 0%, transparent 55%),
+        linear-gradient(180deg, #201811 0%, #17100a 100%); }
+    #proyectos::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: .5; mix-blend-mode: soft-light;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    #proyectos .wrap { position: relative; z-index: 1; }
+    #proyectos .mono-label { color: #90d1ab; }
+    #proyectos .mono-label::before { color: rgba(240,233,221,.35); }
+    #proyectos .title { color: #f6f0e6; }
+    #proyectos .lead { color: rgba(240,233,221,.74); }
+
     .proj-grid { margin-top: clamp(40px, 5vw, 58px); display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .proj-card {
       border: 1px solid var(--line); border-radius: 14px; overflow: hidden; cursor: pointer;
@@ -269,16 +282,19 @@
     .tmodal-links a:hover { color: var(--accent); border-color: var(--accent); }
 
     /* ===== CONTACT ===== */
-    .contact-card { background: var(--ink); color: var(--paper); border-radius: 20px; padding: clamp(40px, 6vw, 82px); }
-    .contact-card .mono-label { color: #9fc3ac; }
-    .contact-card .mono-label::before { color: #5c7a67; }
-    .contact-card h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(28px, 4.6vw, 52px); line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance; max-width: 20ch; margin-top: 18px; }
-    .contact-card p { color: rgba(244,242,234,.66); max-width: 50ch; margin-top: 18px; font-size: 17px; }
-    .contact-cta { margin-top: 34px; display: flex; gap: 14px; flex-wrap: wrap; }
-    .contact-card .btn { background: var(--paper); color: var(--ink); border-color: var(--paper); }
-    .contact-card .btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
-    .contact-card .btn.ghost { background: transparent; color: var(--paper); border-color: rgba(244,242,234,.28); }
-    .contact-card .btn.ghost:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+    #contacto { position: relative; color: #f0e9dd;
+      background:
+        radial-gradient(120% 80% at 82% 0%, #2f2418 0%, transparent 58%),
+        radial-gradient(130% 90% at 10% 100%, #2a2015 0%, transparent 55%),
+        linear-gradient(180deg, #1c150e 0%, #14100b 100%); }
+    #contacto::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: .5; mix-blend-mode: soft-light;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    .contact-wrap { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .95fr); align-items: center; gap: 24px; }
+    .contact-card { background: var(--paper); color: var(--ink); border-radius: 24px; padding: clamp(34px, 4.4vw, 58px); }
+    .contact-card h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(28px, 4vw, 46px); line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance; max-width: 18ch; margin-top: 18px; color: var(--ink); }
+    .contact-card p { color: var(--muted); max-width: 46ch; margin-top: 18px; font-size: 17px; }
+    .contact-cta { margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .contact-horse { align-self: stretch; min-height: 300px; background: url("images/horse.png") center right / contain no-repeat; opacity: .92; }
 
     /* ===== FOOTER ===== */
     footer { padding: 36px 24px; border-top: 1px solid var(--line); }
@@ -324,6 +340,8 @@
 
     @media (max-width: 900px) {
       .svc-grid, .proj-grid, .team-portraits { grid-template-columns: 1fr 1fr; }
+      .contact-wrap { grid-template-columns: 1fr; }
+      .contact-horse { min-height: 220px; }
       .nav-links { display: none; }
       .nav-links.mobile-open {
         display: flex; flex-direction: column; align-items: flex-start;
@@ -434,7 +452,7 @@
 
   <!-- CONTACT -->
   <section id="contacto">
-    <div class="wrap">
+    <div class="wrap contact-wrap">
       <div class="contact-card reveal">
         <span class="mono-label" data-es="Contacto" data-en="Contact">Contacto</span>
         <h2 data-es="¿Tenés una idea o un producto que necesita construirse?" data-en="Have an idea or a product that needs building?">¿Tenés una idea o un producto que necesita construirse?</h2>
@@ -444,6 +462,7 @@
           <a href="#" class="btn ghost" id="waBtn" data-es="WhatsApp" data-en="WhatsApp">WhatsApp</a>
         </div>
       </div>
+      <div class="contact-horse reveal" aria-hidden="true"></div>
     </div>
   </section>
 
